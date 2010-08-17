@@ -1,4 +1,12 @@
-module Main where
+{-
+Tetris demo (c) syntaxglitch on #haskell-game, 2010.
+
+Requires SDL, OpenGL, graphics-drawingcombinators.  Also ensure Vera.ttf
+is in the current directory, or adjust fontpath below.
+On mac osx this must be built with the Makefile.
+
+-}
+
 import Prelude hiding ((++), concat)
 import Control.Applicative
 import Control.Monad
@@ -11,9 +19,11 @@ import qualified Graphics.UI.SDL as SDL
 import Graphics.UI.SDL.Keysym
 import qualified Graphics.Rendering.OpenGL.GL as GL
 
+fontpath = "Vera.ttf"
+
 main = do SDL.init [SDL.InitTimer, SDL.InitVideo]
           SDL.setVideoMode 800 800 32 [SDL.OpenGL]
-          gameLoop =<< (newGame <$> getStdGen <*> openFont "Vera.ttf")
+          gameLoop =<< (newGame <$> getStdGen <*> openFont fontpath)
           SDL.quit
 
 newEvents = moreEvents =<< SDL.pollEvent
